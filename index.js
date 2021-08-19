@@ -1,13 +1,44 @@
-/* Your Code Here */
+function createEmployeeRecord(anArray){
+    let employee = {
+        firstName : anArray[0],
+        familyName: anArray[1],
+        title: anArray[2],
+        payPerHour : anArray[3],
+        timeInEvents:[],
+        timeOutEvents:[]
+    }
+    return employee
+}
 
-/*
- We're giving you this function. Take a look at it, you might see some usage
- that's new and different. That's because we're avoiding a well-known, but
- sneaky bug that we'll cover in the next few lessons!
+function createEmployeeRecords(theArray){
+    const newEmployees = theArray.map(createEmployeeRecord)
+    return newEmployees
+}
 
- As a result, the lessons for this function will pass *and* it will be available
- for you to use if you need it!
- */
+function createTimeInEvent(dateTime){
+    const date = dateTime.split(' ')[0]
+    const hour = parseInt(dateTime.split(' ')[1]);
+    this.timeInEvents.push({'date': date, 'hour' : hour, 'type': 'TimeIn'} )
+    return this
+}
+
+function createTimeOutEvent(dateTime){
+    const date = dateTime.split(' ')[0]
+    const hour = parseInt(dateTime.split(' ')[1]);
+    this.timeOutEvents.push({'date': date, 'hour': hour, 'type': 'TimeOut'})
+    return this
+}
+
+function hoursWorkedOnDate(date){
+    const timeIn = this.timeInEvents.find(d => d.date === date).hour;
+    const timeOut = this.timeOutEvents.find(d => d.date === date).hour;
+    return (timeOut - timeIn) / 100   
+}
+
+function wagesEarnedOnDate(date){
+    const total = this.payPerHour * hoursWorkedOnDate.call(this, date)
+    return total
+}
 
 let allWagesFor = function () {
     let eligibleDates = this.timeInEvents.map(function (e) {
@@ -19,4 +50,13 @@ let allWagesFor = function () {
     }.bind(this), 0) // <== Hm, why did we need to add bind() there? We'll discuss soon!
 
     return payable
+}
+
+function findEmployeeByFirstName(empRec, name){
+    const theName = empRec.find(f => name === f.firstName);
+    return theName
+}
+
+function calculatePayroll(empRecs){
+    return empRecs.reduce((total, empRec)=> total + allWagesFor.call(empRec), 0);
 }
